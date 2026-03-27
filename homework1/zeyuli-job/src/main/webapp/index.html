@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .info h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .info li {
+            padding: 8px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+        .info li:last-child {
+            border-bottom: none;
+        }
+        .links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5a6fd6;
+        }
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 1px solid #667eea;
+        }
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        .tech-stack {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .tech-stack h4 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: #e9ecef;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 学生管理系统</h1>
+        
+        <div class="info">
+            <h3>📋 API 接口说明</h3>
+            <ul>
+                <li><strong>GET /student/{id}</strong> - 根据ID查询学生信息</li>
+                <li><strong>GET /student</strong> - 查询所有学生信息</li>
+                <li><strong>PUT /student/{id}</strong> - 更新学生信息</li>
+                <li><strong>POST /student</strong> - 添加新学生</li>
+                <li><strong>DELETE /student/{id}</strong> - 删除学生</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h3>🔐 权限验证</h3>
+            <p style="color: #666; font-size: 14px; line-height: 1.6;">
+                除Swagger文档外，所有API请求都需要在Header中携带Authorization字段。<br>
+                测试Token: <code>valid-token-123456</code>
+            </p>
+        </div>
+
+        <div class="links">
+            <a href="swagger-ui/index.html" class="btn btn-primary">📚 API 文档</a>
+            <a href="v3/api-docs" class="btn btn-secondary">📄 JSON 文档</a>
+        </div>
+
+        <div class="tech-stack">
+            <h4>技术栈</h4>
+            <div class="tags">
+                <span class="tag">JDK 25</span>
+                <span class="tag">Spring Framework 6.x</span>
+                <span class="tag">MyBatis</span>
+                <span class="tag">MySQL 8.0</span>
+                <span class="tag">Swagger UI</span>
+                <span class="tag">AOP</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

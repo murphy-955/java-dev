@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 定义日志文件路径和名称 -->
+    <property name="LOG_PATH" value="${catalina.base:-.}/logs"/>
+    <property name="LOG_FILE_NAME" value="student-management"/>
+    
+    <!-- 控制台输出（同步） -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- 文件输出（滚动） -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE_NAME}.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天滚动 -->
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 保留30天 -->
+            <maxHistory>30</maxHistory>
+            <!-- 单个文件最大100MB -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- 异步日志配置：包装文件输出 -->
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 队列大小，默认256 -->
+        <queueSize>512</queueSize>
+        <!-- 当队列剩余容量小于此值时，丢弃 TRACE/DEBUG/INFO 级别日志，默认20 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 是否提取调用者数据（影响性能），默认false -->
+        <includeCallerData>false</includeCallerData>
+        <!-- 队列满时的策略：是否阻塞，默认false（丢弃日志） -->
+        <neverBlock>true</neverBlock>
+        <!-- 最大刷盘时间（毫秒），默认1000 -->
+        <maxFlushTime>1000</maxFlushTime>
+        <!-- 引用实际的文件输出appender -->
+        <appender-ref ref="FILE"/>
+    </appender>
+    
+    <!-- 错误日志单独输出（异步） -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE_NAME}-error.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- 异步错误日志 -->
+    <appender name="ASYNC_ERROR_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="ERROR_FILE"/>
+    </appender>
+
+    <!-- 根日志级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNC_FILE"/>
+        <appender-ref ref="ASYNC_ERROR_FILE"/>
+    </root>
+
+    <!-- Spring框架日志 -->
+    <logger name="org.springframework" level="WARN"/>
+    
+    <!-- MyBatis日志 -->
+    <logger name="com.example.mapper" level="DEBUG"/>
+    
+    <!-- 操作日志 -->
+    <logger name="com.example.aspect.LogAspect" level="INFO"/>
+    <logger name="com.example.interceptor.AutoInterceptor" level="INFO"/>
+</configuration>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.OperationLogMapper">
+    
+    <!-- 结果映射 -->
+    <resultMap id="operationLogResultMap" type="com.example.pojo.OperationLog">
+        <id property="id" column="id"/>
+        <result property="methodName" column="method_name"/>
+        <result property="operationTime" column="operation_time"/>
+        <result property="operationDesc" column="operation_desc"/>
+        <result property="ipAddress" column="ip_address"/>
+        <result property="userAgent" column="user_agent"/>
+    </resultMap>
+    
+    <!-- 插入操作日志 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO s_operation_log (method_name, operation_time, operation_desc, ip_address, user_agent)
+        VALUES (#{methodName}, #{operationTime}, #{operationDesc}, #{ipAddress}, #{userAgent})
+    </insert>
+    
+    <!-- 查询所有操作日志 -->
+    <select id="findAll" resultMap="operationLogResultMap">
+        SELECT id, method_name, operation_time, operation_desc, ip_address, user_agent
+        FROM s_operation_log
+        ORDER BY operation_time DESC
+    </select>
+    
+    <!-- 根据方法名查询操作日志 -->
+    <select id="findByMethodName" resultMap="operationLogResultMap">
+        SELECT id, method_name, operation_time, operation_desc, ip_address, user_agent
+        FROM s_operation_log
+        WHERE method_name = #{methodName}
+        ORDER BY operation_time DESC
+    </select>
+    
+</mapper>
