@@ -2,18 +2,19 @@
 
 ## 项目简介
 
-这是一个基于 **Spring Framework 6.x** + **MyBatis** 开发的学生管理系统，采用 RESTful API 设计风格，实现了学生信息的增删改查（CRUD）功能，并集成了 AOP 日志记录、拦截器权限验证、Swagger API 文档等特性。
+这是一个基于 **Spring Framework 6.x** + **MyBatis** 开发的学生管理系统，采用 RESTful API 设计风格，实现了学生信息的增删改查（CRUD）功能，并集成了
+AOP 日志记录、拦截器权限验证、Swagger API 文档等特性。
 
 ## 技术栈
 
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| JDK | 25+ | Java 开发工具包 |
-| Spring Framework | 6.2.3 | 核心框架（Spring MVC、Spring JDBC、Spring AOP） |
-| MyBatis | 3.5.19 | ORM 持久层框架 |
-| MySQL | 8.0+ | 数据库 |
-| Tomcat | 10.1+ | Servlet 容器（需支持 Jakarta EE 9+）|
-| Maven | 3.9+ | 构建工具 |
+| 技术               | 版本     | 说明                                      |
+|------------------|--------|-----------------------------------------|
+| JDK              | 25+    | Java 开发工具包                              |
+| Spring Framework | 6.2.3  | 核心框架（Spring MVC、Spring JDBC、Spring AOP） |
+| MyBatis          | 3.5.19 | ORM 持久层框架                               |
+| MySQL            | 8.0+   | 数据库                                     |
+| Tomcat           | 10.1+  | Servlet 容器（需支持 Jakarta EE 9+）           |
+| Maven            | 3.9+   | 构建工具                                    |
 
 ## 环境准备
 
@@ -42,7 +43,8 @@ mvn -version
 
 ### 4. 安装 Tomcat 10.1+
 
-**⚠️ 重要提示：** 本项目使用 Jakarta EE 9+（`jakarta.servlet` 包名），必须使用 **Tomcat 10.1 或更高版本**。Tomcat 9 及以下版本无法运行。
+**⚠️ 重要提示：** 本项目使用 Jakarta EE 9+（`jakarta.servlet` 包名），必须使用 **Tomcat 10.1 或更高版本**。Tomcat 9
+及以下版本无法运行。
 
 ## 项目运行步骤
 
@@ -57,7 +59,8 @@ cd homework1/zeyuli-job
 1. 登录 MySQL，创建数据库：
 
 ```sql
-CREATE DATABASE student_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE
+DATABASE student_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 2. 执行初始化脚本（位于 `sql/init.sql`）：
@@ -70,6 +73,7 @@ mysql -u root -p student_db < sql/init.sql
 ```
 
 脚本将创建以下表：
+
 - `s_student` - 学生信息表
 - `s_class` - 班级信息表
 - `s_operation_log` - 操作日志表
@@ -164,13 +168,13 @@ Authorization: Bearer valid-token-123456
 
 ### API 接口列表
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/student/{id}` | 根据 ID 查询学生 |
-| GET | `/student` | 查询所有学生 |
-| POST | `/student` | 添加学生（JSON 请求体）|
-| PUT | `/student/{id}` | 更新学生信息（name, age 参数）|
-| DELETE | `/student/{id}` | 删除学生 |
+| 方法     | 路径              | 说明                   |
+|--------|-----------------|----------------------|
+| GET    | `/student/{id}` | 根据 ID 查询学生           |
+| GET    | `/student`      | 查询所有学生               |
+| POST   | `/student`      | 添加学生（JSON 请求体）       |
+| PUT    | `/student/{id}` | 更新学生信息（name, age 参数） |
+| DELETE | `/student/{id}` | 删除学生                 |
 
 ### 使用 curl 测试 API
 
@@ -233,6 +237,7 @@ curl -X DELETE http://localhost:8080/student-management/student/1 \
 ### Q2: 数据库连接失败
 
 **检查：**
+
 1. MySQL 服务是否启动
 2. `db.properties` 中的用户名、密码是否正确
 3. 数据库 `student_db` 是否已创建
@@ -241,6 +246,7 @@ curl -X DELETE http://localhost:8080/student-management/student/1 \
 ### Q3: 接口返回 401 未授权
 
 **检查：**
+
 1. 请求头中是否包含 `Authorization`
 2. Token 是否为 `valid-token-123456`
 3. 注意 Swagger UI 页面不需要认证，但直接调用 API 需要
@@ -248,6 +254,7 @@ curl -X DELETE http://localhost:8080/student-management/student/1 \
 ### Q4: 中文乱码
 
 **检查：**
+
 1. 数据库字符集是否为 `utf8mb4`
 2. JDBC URL 是否包含 `useUnicode=true&characterEncoding=utf8`
 3. 请求头是否设置 `Content-Type: application/json;charset=UTF-8`

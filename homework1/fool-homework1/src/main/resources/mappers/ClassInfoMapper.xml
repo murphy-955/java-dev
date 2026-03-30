@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.ClassInfoMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="classInfoResultMap" type="com.example.pojo.ClassInfo">
+        <id property="id" column="id"/>
+        <result property="className" column="class_name"/>
+    </resultMap>
+
+    <!-- 根据ID查询班级 -->
+    <select id="findById" resultMap="classInfoResultMap">
+        SELECT id, class_name
+        FROM s_class
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有班级 -->
+    <select id="findAll" resultMap="classInfoResultMap">
+        SELECT id, class_name
+        FROM s_class
+    </select>
+
+    <!-- 插入班级 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO s_class (class_name)
+        VALUES (#{className})
+    </insert>
+
+</mapper>
