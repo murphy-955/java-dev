@@ -119,3 +119,5 @@ fabric.properties
 
 /.idea/
 !/homework1/.idea/
+/homework2/docs/venv/
+AGENTS.md
