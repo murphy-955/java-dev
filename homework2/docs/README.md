@@ -12,14 +12,14 @@
 
 ## 技术栈
 
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| JDK | 25+ | Java 开发工具包 |
-| Spring Framework | 6.2.5 | 核心框架 |
-| MyBatis | 3.5.19 | ORM 持久层框架 |
-| H2 Database | 2.2.224 | 内存数据库（测试用） |
-| Tomcat | 10.1+ | Servlet 容器 |
-| Maven | 3.9+ | 构建工具 |
+| 技术               | 版本      | 说明         |
+|------------------|---------|------------|
+| JDK              | 25+     | Java 开发工具包 |
+| Spring Framework | 6.2.5   | 核心框架       |
+| MyBatis          | 3.5.19  | ORM 持久层框架  |
+| H2 Database      | 2.2.224 | 内存数据库（测试用） |
+| Tomcat           | 10.1+   | Servlet 容器 |
+| Maven            | 3.9+    | 构建工具       |
 
 ## 环境要求
 
@@ -61,11 +61,13 @@ mvn cargo:run
 ```
 
 此命令会自动：
+
 1. 下载 Tomcat 10.1.30
 2. 部署 WAR 包
 3. 启动服务
 
 启动成功后，控制台会显示：
+
 ```
 Tomcat 10.1.30 started on port [8080]
 Press Ctrl-C to stop the container...
@@ -79,7 +81,7 @@ Press Ctrl-C to stop the container...
    ```
 
 2. **查看初始数据**：
-   - 系统已预置测试数据（计算机一班、计算机二班、软件工程一班 + 4名学生）
+    - 系统已预置测试数据（计算机一班、计算机二班、软件工程一班 + 4名学生）
 
 ## API 使用说明
 
@@ -93,11 +95,11 @@ Authorization: valid-token-123456
 
 ### 接口列表
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/student/{id}` | 根据 ID 查询学生信息 |
-| GET | `/classInfo/{id}` | 根据 ID 查询班级信息 |
-| PUT | `/student/{id}?name=xxx&age=xxx` | 更新学生信息 |
+| 方法  | 路径                               | 说明           |
+|-----|----------------------------------|--------------|
+| GET | `/student/{id}`                  | 根据 ID 查询学生信息 |
+| GET | `/classInfo/{id}`                | 根据 ID 查询班级信息 |
+| PUT | `/student/{id}?name=xxx&age=xxx` | 更新学生信息       |
 
 ### 使用 curl 测试 API
 
@@ -126,47 +128,19 @@ curl -X GET http://localhost:8080/student-management/student/1
 ### 预期输出示例
 
 **查询学生（id=1）**：
-```json
-{
-  "code": 200,
-  "data": {
-    "id": 1,
-    "name": "张三",
-    "age": 20,
-    "classInfo": {
-      "id": 1,
-      "name": "计算机一班"
-    },
-    "cid": 1
-  }
-}
-```
-
+![查询学生](./imgs/查询学生信息.png)
 **查询班级（id=1）**：
-```json
-{
-  "code": 200,
-  "data": {
-    "id": 1,
-    "name": "计算机一班",
-    "students": [
-      {"id": 1, "name": "张三", "age": 20, "cid": 1},
-      {"id": 2, "name": "李四", "age": 21, "cid": 1}
-    ]
-  }
-}
-```
+![查询学生](./imgs/查询学生班级.png)
+**更新学生（id=2）**：
+![更新学生](./imgs/更新学生信息.png)
+**查询更新结果**：
+![查询更新结果](./imgs/验证更新结果.png)
 
 ## AOP 日志输出
 
 调用 Service 层方法后，控制台会输出：
 
-```
-2026.04.10 16:16:52 getStudentById
-2026.04.10 16:16:52 getClassInfoById
-2026.04.10 16:16:52 updateStudent
-```
-
+![AOP日志](./imgs/控制台输出.png)
 ## 项目结构
 
 ```
@@ -220,6 +194,7 @@ student-management/
 **解决：** 修改 `pom.xml` 中的 Cargo 配置：
 
 ```xml
+
 <properties>
     <cargo.servlet.port>8081</cargo.servlet.port>
 </properties>
@@ -234,6 +209,7 @@ student-management/
 ### Q3: 接口返回 401 未授权
 
 **检查：**
+
 1. 请求头中是否包含 `Authorization: valid-token-123456`
 2. Token 是否正确（不含引号）
 
@@ -242,6 +218,7 @@ student-management/
 **原因：** URL 中直接包含中文，需进行 URL 编码。
 
 **解决：**
+
 - 李雷 → `%E6%9D%8E%E9%9B%B7`
 - 使用在线工具进行编码转换
 
@@ -250,6 +227,7 @@ student-management/
 **检查：** `applicationContext.xml` 中是否扫描了 aspect 包：
 
 ```xml
+
 <context:component-scan base-package="com.example.service,com.example.aspect"/>
 <aop:aspectj-autoproxy/>
 ```
