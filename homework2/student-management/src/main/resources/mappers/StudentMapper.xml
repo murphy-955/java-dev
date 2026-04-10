@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.StudentMapper">
+
+    <!-- 结果映射：学生+班级 -->
+    <resultMap id="studentWithClassResultMap" type="com.example.pojo.Student">
+        <id property="id" column="s_id"/>
+        <result property="name" column="s_name"/>
+        <result property="age" column="s_age"/>
+        <result property="cId" column="c_id"/>
+        <!-- 一对一关联：班级 -->
+        <association property="classInfo" javaType="com.example.pojo.ClassInfo">
+            <id property="id" column="c_id"/>
+            <result property="name" column="c_name"/>
+        </association>
+    </resultMap>
+
+    <!-- 根据ID查询学生（含班级信息） -->
+    <select id="getStudentById" resultMap="studentWithClassResultMap">
+        SELECT
+            s.id AS s_id,
+            s.name AS s_name,
+            s.age AS s_age,
+            s.c_id,
+            c.id AS c_id,
+            c.name AS c_name
+        FROM s_student s
+        LEFT JOIN c_class c ON s.c_id = c.id
+        WHERE s.id = #{id}
+    </select>
+
+    <!-- 更新学生信息 -->
+    <update id="updateStudent">
+        UPDATE s_student
+        SET name = #{name},
+            age = #{age}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
