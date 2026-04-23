@@ -1,0 +1,302 @@
+<mxfile host="65bd71144e">
+    <diagram id="Xt-txYSPiMH9TC0p7WqB" name="第 1 页">
+        <mxGraphModel dx="2526" dy="1702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="4" value="" style="edgeStyle=none;html=1;" parent="1" source="2" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="stp1. 扫描@Compoment，@Bean......，生成BeanDefinition" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="-949" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="stp2. 将BeanDefination注册到BeanDefinitionRegistry中" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="-860" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="edgeStyle=none;html=1;" parent="1" source="5" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="stp3. 执行BeanFactoryPostProcessor.postProcessorBeanFactory方法" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="-780" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="" style="edgeStyle=none;html=1;" parent="1" source="7" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="stp4. 检查一级缓存singleObjetcs缓存，如果存在返回，如果不存在继续下面步骤" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="-700" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="9" target="78">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="stp5. jvm反射创建裸对象，放入DefaultSingletonBeanRegistory.singletonFactories。在此处完成构造函数的注入。" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="-609" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="edgeStyle=none;html=1;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="12" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-738.92" y="-685" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="Bean实例化" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-960" y="-620" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.35;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="12" target="9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-799.9999999999999" y="-650" as="sourcePoint"/>
+                        <mxPoint x="-658.92" y="-600" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="Bean的注册" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-890" y="-880" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="2" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-770" y="-830" as="sourcePoint"/>
+                        <mxPoint x="-478.92" y="-790" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="15" target="3" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-745.92" y="-830" as="sourcePoint"/>
+                        <mxPoint x="-478.92" y="-790" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="15" target="5" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-745.92" y="-830" as="sourcePoint"/>
+                        <mxPoint x="-478.92" y="-790" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="103" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="19" target="34">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="stp6. 解析@Autowired，@Value，@Resource注解的属性和setter方法&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 若被注入的 Bean 正在创建中（循环依赖），则从三级缓存取出其 ObjectFactory 调用 getObject()，触发 getEarlyBeanReference()。若该 Bean 需要 AOP，AbstractAutoProxyCreator 会提前生成代理对象并放入二级缓存 earlySingletonObjects，供对方 Bean 注入&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-673.11" y="-420" width="378.38" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="参照AbstractAutowiredCapableBeanFactory的doCreateBean方法（602行）" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-260" y="-670" width="250" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="22" target="9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-288.92" y="-449" as="sourcePoint"/>
+                        <mxPoint x="-478.92" y="-550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="" style="edgeStyle=none;html=1;" parent="1" source="34" target="36" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="stp8. BeanFactory回调&lt;div&gt;BeanNameAware（注入当前Bean在容器中哦in的名称）；BeanClassLoderAware（注入加载当前Bean的classLoder）；BeanFactoryAware（注入当前BeanFactory的实例）&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-659.46" y="-247.5" width="348.92" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="" style="edgeStyle=none;html=1;" parent="1" source="36" target="38" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="stp9. ApplicationContextAwareProcessor在BeanPostProcessor回调。&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;EnvironmentAware（注入Environment环境配置对象）；&lt;/font&gt;&lt;/span&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;EmbeddedValueResolverAware（注入占位符解析器，用于解析${}配置）；&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;ResourceLoaderAware（注入资源加载器（仅ApplicationContext环境生效））&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;ApplicationEventPublisherAware（注入事件发布器）；&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;MessageSourceAware（注入国际化消息源）；&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;ApplicationContextAware（注入ApplicationContext应用上下文对象）&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-736.42" y="-120" width="503.92" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="38" target="42">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="stp10. 初始化的前置处理BeanPostProcessor接口的postProcessorBeforeInitialization。并&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp;执行@PostConstroct注解的方法&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-650" y="40" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="" style="edgeStyle=none;html=1;" parent="1" source="42" target="44" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="stp12. 执行InitializingBean的afterPropertiesSet方法" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-649.9999999999999" y="130" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="" style="edgeStyle=none;html=1;" parent="1" source="44" target="47" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="stp13. 执行@Bean的initMethod" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="210" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="47" target="85">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="stp14. 初始化的后置处理BeanPostProcessor接口的postProcessAfterInitialization方法" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="295" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="" style="edgeStyle=none;html=1;" parent="1" source="49" target="51" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="stp15. 存入的&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;DefaultSingletonBeanRegistory.singletonObjects一级缓存中。同时清理二，三级缓存&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="520" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="" style="edgeStyle=none;html=1;" parent="1" source="51" target="54" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="stp16. 执行@PreDesctory注解的方法" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="610" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="stp18. @Bean的desctoryMethod方法" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="780" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="" style="edgeStyle=none;html=1;" parent="1" source="54" target="53" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="stp17.&amp;nbsp;实现了DisposableBean接口的destroy方法" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-648.92" y="690" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="Bean初始化" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-960" y="-410" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="" style="endArrow=classic;html=1;exitX=1.006;exitY=0.437;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="57" target="19" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="-400" as="sourcePoint"/>
+                        <mxPoint x="-490" y="-450" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="61" value="BeanAware回调" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-970" y="-100" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="61" target="34" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="-60" as="sourcePoint"/>
+                        <mxPoint x="-490" y="-110" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="63" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="61" target="36" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="-60" as="sourcePoint"/>
+                        <mxPoint x="-490" y="-110" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="64" value="Bean初始化" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-940" y="270" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="64" target="38" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="250" as="sourcePoint"/>
+                        <mxPoint x="-490" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="64" target="42" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="250" as="sourcePoint"/>
+                        <mxPoint x="-490" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="68" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="64" target="44" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="490" as="sourcePoint"/>
+                        <mxPoint x="-490" y="440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="64" target="47" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="490" as="sourcePoint"/>
+                        <mxPoint x="-490" y="440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="70" value="Bean销毁" style="shape=tape;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-950" y="680" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="70" target="51" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="730" as="sourcePoint"/>
+                        <mxPoint x="-490" y="680" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="72" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="70" target="54" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="730" as="sourcePoint"/>
+                        <mxPoint x="-490" y="680" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="73" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="70" target="53" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-540" y="730" as="sourcePoint"/>
+                        <mxPoint x="-490" y="680" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="74" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="64" target="49" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-820" y="340" as="sourcePoint"/>
+                        <mxPoint x="-490" y="440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="80" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="78" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="这里ObjectFactory.getObject()会通过SmartInstantiationAwareBeanPostProcessor.getEarlyBeanReference()获取一个早期的Bean的引用" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-684.46" y="-520" width="400" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="在这里提前处理AOP" style="shape=tape;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-950" y="-510" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="81" target="78">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-420" y="-530" as="sourcePoint"/>
+                        <mxPoint x="-370" y="-580" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="87" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="85" target="49">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="不需要" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="87">
+                    <mxGeometry x="-0.2336" y="-3" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="85" value="是否需要AOP" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-552.5" y="390" width="135" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="89" target="94">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;AbstractAutoProxyCreator.wrapIfNecessary()&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;getAdvicesAndAdvisorsForBean() → AopUtils.canApply() 匹配 Pointcut&lt;/font&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;direction=west;" vertex="1" parent="1">
+                    <mxGeometry x="-60" y="-255" width="260" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="85" target="89">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-420" y="390" as="sourcePoint"/>
+                        <mxPoint x="-50" y="148.337646484375" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-160" y="430"/>
+                            <mxPoint x="-160" y="-212"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="93" value="需要" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="92">
+                    <mxGeometry x="-0.8065" y="-2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="97" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="94" target="96">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="ProxyFactory构建代理配置&lt;div&gt;&lt;div&gt;setTargetSource(new SingletonTargetSource(原始 Bean))&lt;/div&gt;&lt;div&gt;addAdvisors(Advisor[] 拦截器链)&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-45" y="-140" width="230" height="87.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="96" target="98">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="DefoultAutoProxy来决定代理类型&lt;span style=&quot;color: rgb(63, 63, 63); background-color: transparent;&quot;&gt;：&lt;/span&gt;&lt;div&gt;&lt;div&gt;目标类实现了接口 → JdkDynamicAopProxy（基于 InvocationHandler，Proxy.newProxyInstance()）&lt;/div&gt;&lt;div&gt;目标类无接口 或 @EnableAspectJAutoProxy(proxyTargetClass = true) → ObjenesisCglibAopProxy（基于 ASM 生成子类，Objenesis 绕过构造方法）&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-125" y="-20" width="390" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="98" target="100">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="代理对象内部通过 TargetSource 持有原始 Bean&lt;div&gt;Advisor[]:&amp;nbsp; 拦截器责任链&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-105" y="170" width="350" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="方法调用责任链&lt;div&gt;最终执行TargetSource.getTarget().method()&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-65" y="295" width="270" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="100" target="49">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-60" y="330" as="sourcePoint"/>
+                        <mxPoint x="-10" y="280" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="70" y="550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
