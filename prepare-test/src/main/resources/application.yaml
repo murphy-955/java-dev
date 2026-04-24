@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url:
+    username: root
+    password: 123456a
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    auto-mapping-behavior: full
+    map-underscore-to-camel-case: true
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: org.exampkle.pojo
+  mapper-locations: classpath:/mappers/*.xml

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--namespace: 命名空间，用于区分不同的mapper-->
+<mapper namespace="org.example.mappers.BookMapper">
+    <insert id="addBook">
+        INSERT INTO book (book_name, author, price, category_id, stock, publish_date, status)
+        VALUES (#{book.bookName}, #{book.author}, #{book.price}, #{book.categoryId}, #{book.stock}, #{book.publishDate}, #{book.status})
+    </insert>
+
+    <select id="getBookById"
+            resultType="org.example.pojo.vo.SelectBookByIdVo">
+        SELECT book.book_name, book.author AS author, book.price, category.name AS categoryName, book.stock, book.publish_date, book.status
+        FROM book
+        LEFT JOIN category ON book.category_id = category.id
+        WHERE book.id = #{id}
+    </select>
+
+    <select id="listBook"
+            resultType="org.example.pojo.Book">
+        SELECT * FROM book
+        <where>
+            <if test="bookName!=null">
+                AND book_name LIKE CONCAT('%', #{bookName}, '%')
+            </if>
+            <if test="author!=null">
+                AND author LIKE CONCAT('%', #{author}, '%')
+            </if>
+            <if test="minPrice!=null">
+                AND price &lt;= #{minPrice}
+            </if>
+            <if test="maxPrice!=null">
+                AND price &lt;= #{maxPrice}
+            </if>
+            <if test="categoryId!=null">
+                AND category_id = #{categoryId}
+            </if>
+        </where>
+    </select>
+    
+    <update id="updateBook">
+        UPDATE book
+        <set>
+            <if test="bookName!=null">
+                book_name = #{bookName},
+            </if>
+
+            <if test="author!=null">
+                author = #{author},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteBooks">
+        DELETE FROM BOOK
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="batchAddBooks">
+        INSERT INTO book (book_name, author, price, category_id, stock, publish_date, status)
+        VALUES
+        <foreach collection="books" item="book" separator=",">
+            (#{bookName}, #{author}, #{price}, #{categoryId}, #{stock}, #{publishDate}, #{status})
+        </foreach>
+    </insert>
+</mapper>
