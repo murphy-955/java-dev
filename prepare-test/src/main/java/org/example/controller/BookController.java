@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.example.pojo.Book;
 import org.example.pojo.dto.QueryDto;
