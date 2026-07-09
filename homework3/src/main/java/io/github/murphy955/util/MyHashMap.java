@@ -3,10 +3,7 @@ package io.github.murphy955.util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * 手写hashmap
@@ -39,6 +36,7 @@ public class MyHashMap {
      * @author 李泽聿
      * @since 2026-07-09 09:08
      */
+    @SuppressWarnings("unchecked")
     public void put(Object key, Object value) {
         if (this.data == null || this.data.isEmpty()) {
             this.data = new ArrayList<>(DEFAULT_CAPACITY);
@@ -118,6 +116,47 @@ public class MyHashMap {
     }
 
     /**
+     * 根据键获取值
+     *
+     * @param key 键
+     * @return 值
+     * @author 李泽聿
+     * @since 2026-07-09 09:56
+     */
+    @SuppressWarnings("unchecked")
+    public Object get(Object key) {
+        int hash = hash(key);
+        int purposePos = indexFor(hash, this.data.size());
+        Object currentNode = this.data.get(purposePos);
+        // 1. 无冲突
+        if (!(currentNode instanceof LinkedList<?>)
+                && !(currentNode instanceof TreeMap<?, ?>)) {
+            System.out.println("get success.无冲突");
+            return currentNode;
+        }
+        // 2. 有冲突(链表)
+        if (currentNode instanceof LinkedList<?>) {
+            LinkedList<Node> list = (LinkedList<Node>) currentNode;
+            for (Node node : list) {
+                if (node.hash == hash && keyEquals(node.key, key)) {
+                    System.out.println("get success.有冲突(链表)");
+                    return node.value;
+                }
+            }
+        }
+        // 3. 有冲突(红黑树)
+        if (currentNode instanceof TreeMap<?, ?>) {
+            TreeMap<Object, Node> tree = (TreeMap<Object, Node>) currentNode;
+            Node node = tree.get(key);
+            if (node != null) {
+                System.out.println("get success.有冲突(红黑树)");
+                return node.value;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 计算 hash 值
      *
      * @param key 键
@@ -130,12 +169,19 @@ public class MyHashMap {
         return (h ^ (h >>> 16)) & 0x7FFFFFFF;
     }
 
+    /**
+     * @param hash   哈希值
+     * @param length 长度
+     * @return int 哈希值的下标
+     * @author 李泽聿
+     * @since 2026-07-09 10:01
+     */
     private int indexFor(int hash, int length) {
         return hash % length;
     }
 
     private boolean keyEquals(Object k1, Object k2) {
-        return k1 == k2 || (k1 != null && k1.equals(k2));
+        return Objects.equals(k1, k2);
     }
 
     private void checkResize() {
@@ -159,7 +205,7 @@ public class MyHashMap {
 
     @Data
     @AllArgsConstructor
-    class Node {
+    static class Node {
         Object key;
         Object value;
         int hash;
