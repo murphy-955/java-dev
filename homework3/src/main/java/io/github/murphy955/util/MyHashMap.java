@@ -199,8 +199,103 @@ public class MyHashMap {
         this.data.set(pos, tree);
     }
 
-    private void resize(int len) {
+    /**
+     * 扩容：创建新数组，容量翻倍，把旧节点全部重新哈希后迁移过去。
+     *
+     * @param newCapacity 新数组容量
+     * @author 李泽聿
+     * @since 2026-07-09 10:08
+     */
+    @SuppressWarnings("unchecked")
+    private void resize(int newCapacity) {
+        List<Object> oldData = this.data;
 
+        this.data = new ArrayList<>(newCapacity);
+        for (int i = 0; i < newCapacity; i++) {
+            this.data.add(null);
+        }
+
+        this.size = 0;
+
+        for (Object bucket : oldData) {
+            switch (bucket) {
+                case Node node -> {
+                    if (putNodeTo(node, this.data)) {
+                        this.size++;
+                    }
+                }
+                case LinkedList<?> list -> {
+                    for (Node node : (LinkedList<Node>) list) {
+                        if (putNodeTo(node, this.data)) {
+                            this.size++;
+                        }
+                    }
+                }
+                case TreeMap<?, ?> tree -> {
+                    for (Node node : ((TreeMap<Object, Node>) tree).values()) {
+                        if (putNodeTo(node, this.data)) {
+                            this.size++;
+                        }
+                    }
+                }
+                case null, default -> {
+                }
+            }
+        }
+    }
+
+    /**
+     * 把单个节点放入目标数组，不修改 size、不触发扩容。
+     *
+     * @return true 表示新增了节点；false 表示 key 命中，覆盖了旧 value
+     */
+    @SuppressWarnings("unchecked")
+    private boolean putNodeTo(Node node, List<Object> target) {
+        int purposePos = indexFor(node.hash, target.size());
+        Object current = target.get(purposePos);
+
+        switch (current) {
+            case null -> {
+                target.set(purposePos, node);
+                return true;
+            }
+            // 处理单个节点
+            case Node head -> {
+                if (head.hash == node.hash && keyEquals(head.key, node.key)) {
+                    head.value = node.value;
+                    return false;
+                }
+                LinkedList<Node> list = new LinkedList<>();
+                list.add(head);
+                list.add(node);
+                target.set(purposePos, list);
+                return true;
+            }
+            // 处理链表
+            case LinkedList<?> objects -> {
+                LinkedList<Node> list = (LinkedList<Node>) current;
+                for (Node n : list) {
+                    if (n.hash == node.hash && keyEquals(n.key, node.key)) {
+                        n.value = node.value;
+                        return false;
+                    }
+                }
+                list.add(node);
+                if (list.size() > LINKED_LIST_THRESHOLD) {
+                    convertToTree(purposePos, list);
+                }
+                return true;
+            }
+            // 处理红黑树
+            case TreeMap<?, ?> treeMap -> {
+                TreeMap<Object, Node> tree = (TreeMap<Object, Node>) current;
+                Node old = tree.put(node.key, node);
+                return old == null;
+            }
+            default -> {
+                return true;
+            }
+        }
     }
 
     @Data
