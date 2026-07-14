@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -86,6 +87,9 @@ public class MyThreadPoll {
      * @since 2026-07-14 16:30
      */
     public void execute(Runnable task) {
+        if (task == null){
+            throw new IllegalArgumentException("Task cannot be null");
+        }
         if (workerSet.size() < corePoolSize) {
             addWorker(task, true);
         } else if (queue.offer(task)) {
@@ -93,7 +97,7 @@ public class MyThreadPoll {
         } else if (workerSet.size() < maximumPoolSize) {
             addWorker(task, false);
         } else {
-            rejectedExecution(task, this, denyPolicy);
+            rejectedExecution(task, denyPolicy);
         }
     }
 
@@ -120,13 +124,26 @@ public class MyThreadPoll {
 
     /**
      * @param task 任务
-     * @param myThreadPoll 线程池
      * @param denyPolicy 拒绝策略
      * @author 李泽聿
      * @since 2026-07-14 17:02
      */
-    private void rejectedExecution(Runnable task, MyThreadPoll myThreadPoll, DenyPolicy denyPolicy) {
-
+    private void rejectedExecution(Runnable task, DenyPolicy denyPolicy) {
+        if (DenyPolicy.ABORT.equals(denyPolicy)){
+            throw new RejectedExecutionException("Task " + task + " rejected");
+        }
+        else if (DenyPolicy.CALLER_RUNS.equals(denyPolicy)){
+            task.run();
+        }
+        else if (DenyPolicy.DISCARD.equals(denyPolicy)){
+            // 静默丢弃任务
+            return;
+        }
+        else if (DenyPolicy.DISCARD_OLDEST.equals(denyPolicy)){
+            // 丢弃队列最老任务，然后重试提交
+            queue.poll();
+            queue.offer(task);
+        }
     }
 
 
