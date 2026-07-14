@@ -1,6 +1,7 @@
 package io.github.murphy955.util.concurrent;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.Set;
@@ -75,49 +76,107 @@ public class MyThreadPoll {
 
     /**
      * <ol>
-     *     <li>workerSet.size() < corePoolSize&&queue.offer(task) == true，创建新线程执行任务</li>
-     *     <li>workerSet.size() >= corePoolSize&&queue.offer(task) == true，将任务加入队列</li>
-     *     <li>workerSet.size() >= maximumPoolSize&&queue.offer(task)==false，执行拒绝策略</li>
+     *     <li> 当前线程数 < corePoolSize → addWorker(task, true)  // 创建核心线程，直接执行</li>
+     *     <li> 否则，queue.offer(task) == true → 入队成功，结束</li>
+     *     <li> 否则，当前线程数 < maximumPoolSize → addWorker(task, false) // 创建救急线程，直接执行</li>
+     *     <li> 否则 → reject(task) // 拒绝策略</li>
      * </ol>
-    * @author 李泽聿
-    * @since 2026-07-14 16:30
-    */
+     *
+     * @author 李泽聿
+     * @since 2026-07-14 16:30
+     */
     public void execute(Runnable task) {
-    }
-}
-
-final class Worker implements Runnable{
-    private Runnable firstTask;
-
-    Worker(Runnable firstTask) {
-        this.firstTask = firstTask;
-    }
-
-    void start() {
-        Thread thread = new Thread(this);
-        thread.start();
+        if (workerSet.size() < corePoolSize) {
+            addWorker(task, true);
+        } else if (queue.offer(task)) {
+            return;
+        } else if (workerSet.size() < maximumPoolSize) {
+            addWorker(task, false);
+        } else {
+            rejectedExecution(task, this, denyPolicy);
+        }
     }
 
-    @Override
-    public void run() {
-        while (firstTask != null || (firstTask = getTask()) != null) {
+    /**
+     * @param task 任务
+     * @param core 是否核心线程
+     * @author 李泽聿
+     * @since 2026-07-14 16:48
+     */
+    private void addWorker(Runnable task, boolean core) {
+        int limit;
+        if (core) {
+            limit = corePoolSize;
+        } else {
+            limit = maximumPoolSize;
+        }
+        if (workerSet.size() >= limit) {
+            return;
+        }
+        Worker worker = new Worker(task);
+        workerSet.add(worker);
+        worker.start();
+    }
+
+    /**
+     * @param task 任务
+     * @param myThreadPoll 线程池
+     * @param denyPolicy 拒绝策略
+     * @author 李泽聿
+     * @since 2026-07-14 17:02
+     */
+    private void rejectedExecution(Runnable task, MyThreadPoll myThreadPoll, DenyPolicy denyPolicy) {
+
+    }
+
+
+    @EqualsAndHashCode
+    private final class Worker implements Runnable {
+        private Runnable firstTask;
+
+        Worker(Runnable firstTask) {
+            this.firstTask = firstTask;
+        }
+
+        void start() {
+            Thread thread = new Thread(this);
+            thread.start();
+        }
+
+        @Override
+        public void run() {
+            Runnable task = firstTask;
+            firstTask = null;
+
+            while (task != null || (task = getTask()) != null) {
+                try {
+                    task.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    task = null;
+                }
+            }
+
+            // 线程退出时从集合移除
+            workerSet.remove(this);
+        }
+
+        private Runnable getTask() {
+            if (workerSet.size() < corePoolSize) {
+                try {
+                    return queue.take();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return null;
+                }
+            }
             try {
-                firstTask.run();
-            } finally {
-                firstTask = null;
+                return queue.poll(keepAliveTime, timeUnit);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return null;
             }
         }
-        // 退出时从 workers 中移除
-        workers.remove(this);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
     }
 }
